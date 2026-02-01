@@ -1,0 +1,34 @@
+## =========================
+## Assignment 2 (Tasks 4–10)
+## =========================
+
+## ---- Task 4: list all .csv files in Data/ and store in csv_files ----
+csv_files <- list.files(path = "Data", pattern = "\\.csv$", full.names = TRUE)
+
+## ---- Task 5: how many files? ----
+length(csv_files)
+
+## ---- Task 6: read wingspan_vs_mass.csv into df ----
+df <- read.csv("Data/wingspan_vs_mass.csv")
+
+## ---- Task 7: inspect first 5 lines ----
+head(df, 5)
+
+## ---- Task 8: find files (recursively) in Data/ that begin with "b" ----
+b_files <- list.files(path = "Data", pattern = "^b", recursive = TRUE, full.names = TRUE)
+
+b_files  # optional: print to see what you found
+
+## ---- Task 9: display the first line of each "b" file (for-loop) ----
+for (f in b_files) {
+  cat("\n-----", f, "-----\n")
+  line1 <- readLines(f, n = 1, warn = FALSE)
+  cat(line1, "\n")
+}
+
+## ---- Task 10: display the first line of each .csv file (for-loop) ----
+for (f in csv_files) {
+  cat("\n-----", f, "-----\n")
+  line1 <- readLines(f, n = 1, warn = FALSE)
+  cat(line1, "\n")
+}
