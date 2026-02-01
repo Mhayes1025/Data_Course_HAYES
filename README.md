@@ -8,3 +8,4 @@ R and RStudio will be used for data analysis in this course.
 This README will be updated throughout the semester.
 Git commands practiced: add, commit, push, clone.
 This repository is public for instructional purposes.
+Last updated: February 2026
