@@ -5,3 +5,4 @@ Author: Mason Hayes
 This repository contains assignments, exercises, and datasets.
 I am learning how to use Git and GitHub for version control.
 R and RStudio will be used for data analysis in this course.
+This README will be updated throughout the semester.
