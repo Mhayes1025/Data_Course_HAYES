@@ -1,0 +1,26 @@
+Final Project Idea: Sleep Quality and Immune Response
+
+For my final project, I will analyze the relationship between sleep quality and immune
+response in humans. Sleep is known to play an important role in maintaining immune
+function, but many people do not prioritize sleep in daily life. This project will explore
+whether individuals who report better sleep quality tend to experience fewer sick days,
+which can serve as a simple indicator of immune health.
+
+The data for this project will include individual-level measurements such as sleep duration,
+self-reported sleep quality, and number of sick days over a recent time period. If real data
+are not available, I will use a simulated dataset that reflects realistic biological trends
+based on existing literature.
+
+The dataset will include the following variables:
+- Subject ID
+- Average sleep hours per night
+- Sleep quality score (on a scale of 1 to 10)
+- Number of sick days in the past 30 days
+
+Potential sources for real data could include publicly available health surveys, sleep studies,
+or clinical research databases. In this assignment, I will use simulated data that mimic
+expected patterns, such as higher sleep quality being associated with fewer sick days.
+
+The goal of this project is to visualize the relationship between sleep quality and immune
+health and to use basic statistical analysis to evaluate whether sleep quality is a meaningful
+predictor of immune response.
