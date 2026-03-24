@@ -1,0 +1,8 @@
+1. Some predicted values could be meaningless if they are based on unrealistic inputs, like very high or negative values of light or temperature. Linear models will still give predictions even outside the range of the data, but those don’t always make sense biologically. As long as predictions stay within a realistic range, they are meaningful.
+2. Some of the plots showed curved patterns, which suggests a non-linear relationship. This means a simple linear model might not fully capture the data. One way to handle this in R is by adding polynomial terms (like x^2) or transforming variables to better fit the curve.
+Resource: https://www.sthda.com/english/articles/40-regression-analysis/162-nonlinear-regression-essentials-in-r-polynomial-and-spline-regression-models/
+3. data_nl <- read.csv("Data/non_linear_relationship.csv")
+# Polynomial (quadratic) model
+model_nl <- lm(Y ~ X + I(X^2), data = data_nl)
+# OR log transformation
+model_nl_log <- lm(log(Y) ~ X, data = data_nl)
