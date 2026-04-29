@@ -1,0 +1,92 @@
+---
+title: "Exam 4 (Redo Exam 3)"
+output: html_document
+date: "2026-04-29"
+---
+
+## Set up tools
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(broom)
+```
+
+## Task 1: Load and clean "FacultySalaries_1995.csv" data & recreate graph
+
+```{r}
+data <- read_csv("FacultySalaries_1995.csv")
+
+tidy_salary <- data %>%
+  select(State, Tier, AvgAssistProfSalary, AvgAssocProfSalary, AvgFullProfSalary) %>%
+  pivot_longer(
+    cols = c(AvgAssistProfSalary, AvgAssocProfSalary, AvgFullProfSalary),
+    names_to = "Rank",
+    values_to = "Salary"
+  ) %>%
+  mutate(
+    Rank = case_when(
+      Rank == "AvgAssistProfSalary" ~ "Assist",
+      Rank == "AvgAssocProfSalary" ~ "Assoc",
+      Rank == "AvgFullProfSalary" ~ "Full"
+    )
+  )
+
+tidy_salary <- tidy_salary %>%
+  filter(!is.na(Salary), Tier %in% c("I", "IIA", "IIB"))
+```
+
+```{r}
+ggplot(tidy_salary, aes(x = Rank, y = Salary, fill = Rank)) +
+  geom_boxplot() +
+  facet_wrap(~Tier) +
+  theme_minimal()
+```
+
+## Task 2: Build an ANOVA model and display the summary output in your report.
+```{r}
+salary_model <- aov(Salary ~ State + Tier + Rank, data = tidy_salary)
+summary(salary_model)
+```
+## ANOVA Results
+The ANOVA results show that State, Tier, and Rank all have a statistically significant effect on faculty salary (p < 0.001 for all predictors). Rank has the largest influence on salary, as indicated by the highest F-value, meaning that salaries differ substantially between assistant, associate, and full professors. Tier also has a strong effect, suggesting that institutions with different research funding levels have different salary distributions. While State is also significant, its effect is smaller relative to Rank and Tier. Overall, these results indicate that salary variation is primarily driven by rank and institutional tier, with additional variation across states.
+
+## Task 3: Tidy the "Juniper_Oils.csv" data
+```{r}
+juniper <- read_csv("Juniper_Oils.csv")
+
+chemicals <- c("alpha-pinene","para-cymene","alpha-terpineol","cedr-9-ene",
+               "alpha-cedrene","beta-cedrene","cis-thujopsene",
+               "alpha-himachalene","beta-chamigrene","cuparene",
+               "compound 1","alpha-chamigrene","widdrol","cedrol",
+               "beta-acorenol","alpha-acorenol","gamma-eudesmol",
+               "beta-eudesmol","alpha-eudesmol","cedr-8-en-13-ol",
+               "cedr-8-en-15-ol","compound 2","thujopsenal")
+
+juniper_long <- juniper %>%
+  pivot_longer(cols = all_of(chemicals),
+               names_to = "ChemicalID",
+               values_to = "Concentration")
+```
+
+## Task 4: Make a graph
+```{r}
+ggplot(juniper_long, aes(x = YearsSinceBurn, y = Concentration)) +
+  geom_smooth() +
+  facet_wrap(~ChemicalID, scales = "free_y") +
+  theme_minimal()
+```
+
+## Task 5: Generalized linear model
+```{r}
+glm_model <- lm(Concentration ~ YearsSinceBurn * ChemicalID, data = juniper_long)
+
+results <- tidy(glm_model)
+
+significant <- results %>%
+  filter(p.value < 0.05)
+
+significant
+```
+## GLM Explanation
+The model identified several chemicals whose concentrations are significantly affected by years since burn, including alpha-cedrene, cedrol, and cis-thujopsene.
